@@ -1,0 +1,24 @@
+Internal Suitability Policy - Retail Advisory Division
+Document ref: SUIT-POL-07 (Rev. 4)
+
+Purpose: This policy governs how advisors match recommended products to client risk profiles.
+
+Section 3 - Risk Tolerance Matching
+Advisors must not recommend a product whose risk category exceeds the client's documented
+risk tolerance by more than one level on the firm's five-tier scale
+(Conservative, Moderately Conservative, Balanced, Growth, Aggressive Growth).
+
+Section 4 - Horizon Matching
+Products recommended to clients with an investment horizon under 5 years must have a
+recommended minimum holding period at or below the client's stated horizon. Equity-heavy
+products with a stated 5+ year minimum horizon should not be recommended to clients with
+liquidity needs inside that window.
+
+Section 5 - Capital Loss Tolerance
+Where a client has documented an explicit maximum acceptable annual capital loss, the
+recommended product's historical worst-case drawdown must be disclosed to the client and
+flagged in the advisory file if it exceeds that stated tolerance.
+
+Section 6 - Documentation
+Every recommendation must be accompanied by an internal advisory note explaining the
+rationale and confirming the above checks were performed.
