@@ -1,4 +1,10 @@
-gradio
+gradio==6.22.0
+# huggingface_hub removed HfFolder in 0.26.0. If your Space's base image bundles
+# an older gradio whose oauth.py still imports HfFolder, an unpinned
+# huggingface_hub (pulled in transitively below) resolves to latest and breaks
+# gradio's import before your app code even runs. Pinning below 0.26 avoids
+# that regardless of which gradio actually ends up installed.
+huggingface_hub<0.26,>=0.23
 python-dotenv
 langchain
 langchain-classic

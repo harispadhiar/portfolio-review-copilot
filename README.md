@@ -4,8 +4,8 @@ emoji: 🗂️
 colorFrom: indigo
 colorTo: yellow
 sdk: gradio
-sdk_version: "4.44.0"
-python_version: "3.11"
+sdk_version: "6.22.0"
+python_version: "3.12"
 app_file: app.py
 pinned: false
 ---
@@ -54,13 +54,21 @@ finance-appropriate role for it.
 favoring exact-term matches), `CANDIDATE_K`/`FINAL_K`, and `RERANK_MODEL` (swap for a
 finance-tuned reranker like `bge-reranker-v2-m3` if you outgrow the general-purpose default).
 
+## Design
+
+The UI uses a "case file" visual language suited to compliance review work rather than a
+default Gradio look: an ink-navy + brass accent palette, a serif display face for headers
+paired with a monospace face for data/labels, uploaded documents shown as a manifest
+checklist (required vs. optional types called out), and verdicts rendered as a stamped
+seal rather than plain text. All CSS lives in `app.py` (`CUSTOM_CSS`) — design tokens
+(colors, doc-type accents) are defined near the top of the file if you want to retheme it.
+
 ## Setup
 
 ```bash
 uv venv
-.venv\Scripts\activate
 uv pip install -r requirements.txt
-
+cp .env.example .env   # add your GROQ_API_KEY (HF_TOKEN is optional)
 uv run python app.py
 ```
 
@@ -68,14 +76,28 @@ Open http://127.0.0.1:7860
 
 ## Test it
 
-1. Upload the sample files in `data/` (client_risk_profile.txt, product_factsheet.txt,
-   risk_disclosure.txt, fee_disclosure.txt). These are synthetic and deliberately
-   mismatched — conservative client, aggressive high-volatility fund — so you should
-   see an "unsuitable" or "possibly suitable" verdict with clear reasoning.
+`data/` has two scenarios, each with all 7 document types:
+
+**`scenario_a_mismatch/`** — a conservative, near-retirement client (low risk tolerance,
+short horizon, explicit loss limit) paired with an aggressive high-volatility equity fund.
+1. Upload all 7 files from `data/scenario_a_mismatch/`.
 2. Click "Build index".
 3. Ask: `Is the Alpha Growth Equity Fund suitable for this client?`
-4. Try removing a file (e.g. the risk disclosure) and rebuilding — you should see it
-   flagged under "Missing information".
+4. Expect an "unsuitable" or "possibly suitable" verdict — the client risk profile,
+   suitability policy, and even the advisor's own internal note point the same direction.
+
+**`scenario_b_match/`** — a mid-career client with an 8-year horizon and moderate risk
+tolerance, paired with a balanced fund whose risk profile and horizon line up.
+1. Upload all 7 files from `data/scenario_b_match/`.
+2. Click "Build index".
+3. Ask: `Is the Balanced Growth Allocation Fund suitable for this client?`
+4. Expect a "suitable" verdict with supporting reasoning.
+
+**Missing-data path**: rebuild the index with one or two files removed from either scenario
+(e.g. drop the client risk profile) — you should see it flagged under "Missing information".
+
+See `SAMPLE_QUESTIONS.md` for a broader set of test prompts — including hallucination
+guardrail checks, policy-compliance questions, and cross-document reasoning tests.
 
 ## Files
 
